@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # ⚡ Clean and fast install using lock file (CI-style)
-RUN npm ci
+RUN npm install
 
 # 📦 Now copy the rest of your app source
 COPY . .
