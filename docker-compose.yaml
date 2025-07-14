@@ -13,6 +13,8 @@ services:
       - ./mysql-init:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
+    networks:
+      - appnet
 
   backend:
     build: ./api
@@ -28,6 +30,9 @@ services:
       - mysql
     ports:
       - "5000:5000"
+    networks:
+      - appnet
+    command: sh -c "npx wait-port mysql:3306 && npm start"
 
   frontend:
     build: ./client
@@ -36,6 +41,11 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - appnet
 
 volumes:
   mysql-data:
+
+networks:
+  appnet:
